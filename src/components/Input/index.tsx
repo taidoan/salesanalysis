@@ -1,8 +1,13 @@
 "use client";
 import { useState } from "react";
-import { toObjects } from "@/utilities/toObject";
 import { getQuantity } from "@/utilities/getQuantity";
 import { getSalesValues } from "@/utilities/getSalesValues";
+import {
+  hiddenColumns,
+  salesColumnOrder,
+  quantityColumnOrder,
+  headerNames,
+} from "@/config";
 
 export default function PasteTable() {
   const [rows, setRows] = useState<string[][]>([]);
@@ -30,56 +35,50 @@ export default function PasteTable() {
 
   return (
     <div
-      className="border p-4"
-      contentEditable
-      suppressContentEditableWarning
+      className="border p-8 rounded-xl flex gap-8"
       onPaste={handlePaste}
       style={{ minHeight: "200px", cursor: "text" }}
     >
       {rows.length === 0 ? (
-        <p>Paste your Excel data here</p>
+        <textarea placeholder="Paste your Excel data here"></textarea>
       ) : (
         <>
-          {/* Full pasted table */}
-          <table className="border-collapse border border-gray-400 mb-6">
-            <tbody>
-              {rows.map((row, i) => (
-                <tr key={i}>
-                  {row.map((cell, j) => (
-                    <td key={j} className="border border-gray-400 px-2 py-1">
-                      {cell}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          {/* Top 5 section */}
           {topFive.length > 0 && (
-            <div>
-              <h2 className="font-bold mb-2">Top 5 by Quantity Sold</h2>
+            <div contentEditable={false}>
+              <h2 className="font-bold mb-4">Top 5 Products by Quantity</h2>
               <table className="border-collapse border border-gray-400">
                 <thead>
                   <tr>
-                    {Object.keys(topFive[0]).map((h) => (
-                      <th key={h} className="border border-gray-400 px-2 py-1">
-                        {h}
-                      </th>
-                    ))}
+                    {quantityColumnOrder
+                      .filter((col) => !hiddenColumns.includes(col))
+                      .map((col) => (
+                        <th
+                          key={col}
+                          className="border border-gray-400 px-2 py-1"
+                        >
+                          {headerNames[col] || col}
+                        </th>
+                      ))}
                   </tr>
                 </thead>
                 <tbody>
                   {topFive.map((row, i) => (
                     <tr key={i}>
-                      {Object.values(row).map((val, j) => (
-                        <td
-                          key={j}
-                          className="border border-gray-400 px-2 py-1"
-                        >
-                          {val}
-                        </td>
-                      ))}
+                      {quantityColumnOrder
+                        .filter((col) => !hiddenColumns.includes(col))
+                        .map((col) => (
+                          <td
+                            key={col}
+                            className="border border-gray-400 px-2 py-1 text-center"
+                          >
+                            {col === "Value of Sales"
+                              ? new Intl.NumberFormat("en-GB", {
+                                  style: "currency",
+                                  currency: "GBP",
+                                }).format(row[col])
+                              : row[col]}
+                          </td>
+                        ))}
                     </tr>
                   ))}
                 </tbody>
@@ -88,29 +87,41 @@ export default function PasteTable() {
           )}
 
           {topFiveSales.length > 0 && (
-            <div>
-              <h2 className="font-bold mb-2">Top 5 by Value of Sales</h2>
+            <div contentEditable={false}>
+              <h2 className="font-bold mb-4">Top 5 Products by Sales</h2>
               <table className="border-collapse border border-gray-400">
                 <thead>
                   <tr>
-                    {Object.keys(topFiveSales[0]).map((h) => (
-                      <th key={h} className="border border-gray-400 px-2 py-1">
-                        {h}
-                      </th>
-                    ))}
+                    {salesColumnOrder
+                      .filter((col) => !hiddenColumns.includes(col))
+                      .map((col) => (
+                        <th
+                          key={col}
+                          className="border border-gray-400 px-2 py-1"
+                        >
+                          {headerNames[col] || col}
+                        </th>
+                      ))}
                   </tr>
                 </thead>
                 <tbody>
                   {topFiveSales.map((row, i) => (
                     <tr key={i}>
-                      {Object.values(row).map((val, j) => (
-                        <td
-                          key={j}
-                          className="border border-gray-400 px-2 py-1"
-                        >
-                          {val}
-                        </td>
-                      ))}
+                      {salesColumnOrder
+                        .filter((col) => !hiddenColumns.includes(col))
+                        .map((col) => (
+                          <td
+                            key={col}
+                            className="border border-gray-400 px-2 py-1 text-center"
+                          >
+                            {col === "Value of Sales"
+                              ? new Intl.NumberFormat("en-GB", {
+                                  style: "currency",
+                                  currency: "GBP",
+                                }).format(row[col])
+                              : row[col]}
+                          </td>
+                        ))}
                     </tr>
                   ))}
                 </tbody>
