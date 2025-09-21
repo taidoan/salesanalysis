@@ -8,6 +8,7 @@ import {
   quantityColumnOrder,
   headerNames,
 } from "@/config";
+import { Table } from "../Table";
 
 export default function PasteTable() {
   const [rows, setRows] = useState<string[][]>([]);
@@ -35,7 +36,17 @@ export default function PasteTable() {
 
   return (
     <div
-      className="border p-8 rounded-xl flex gap-8"
+      className="    rounded-3xl 
+      p-6
+      bg-white/30 
+      backdrop-blur-xl 
+      border border-white/40
+      shadow-2xl
+      text-center 
+      dark:bg-stone-900/50 
+      dark:border-stone-100/20 
+      print:bg-white
+      transition-all duration-300 flex gap-8"
       onPaste={handlePaste}
       style={{ minHeight: "200px", cursor: "text" }}
     >
@@ -44,89 +55,19 @@ export default function PasteTable() {
       ) : (
         <>
           {topFive.length > 0 && (
-            <div contentEditable={false}>
-              <h2 className="font-bold mb-4">Top 5 Products by Quantity</h2>
-              <table className="border-collapse border border-gray-400">
-                <thead>
-                  <tr>
-                    {quantityColumnOrder
-                      .filter((col) => !hiddenColumns.includes(col))
-                      .map((col) => (
-                        <th
-                          key={col}
-                          className="border border-gray-400 px-2 py-1"
-                        >
-                          {headerNames[col] || col}
-                        </th>
-                      ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {topFive.map((row, i) => (
-                    <tr key={i}>
-                      {quantityColumnOrder
-                        .filter((col) => !hiddenColumns.includes(col))
-                        .map((col) => (
-                          <td
-                            key={col}
-                            className="border border-gray-400 px-2 py-1 text-center"
-                          >
-                            {col === "Value of Sales"
-                              ? new Intl.NumberFormat("en-GB", {
-                                  style: "currency",
-                                  currency: "GBP",
-                                }).format(row[col])
-                              : row[col]}
-                          </td>
-                        ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <Table
+              header="Top 10 Products by Quantity"
+              columns={quantityColumnOrder}
+              data={topFive}
+            />
           )}
 
           {topFiveSales.length > 0 && (
-            <div contentEditable={false}>
-              <h2 className="font-bold mb-4">Top 5 Products by Sales</h2>
-              <table className="border-collapse border border-gray-400">
-                <thead>
-                  <tr>
-                    {salesColumnOrder
-                      .filter((col) => !hiddenColumns.includes(col))
-                      .map((col) => (
-                        <th
-                          key={col}
-                          className="border border-gray-400 px-2 py-1"
-                        >
-                          {headerNames[col] || col}
-                        </th>
-                      ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {topFiveSales.map((row, i) => (
-                    <tr key={i}>
-                      {salesColumnOrder
-                        .filter((col) => !hiddenColumns.includes(col))
-                        .map((col) => (
-                          <td
-                            key={col}
-                            className="border border-gray-400 px-2 py-1 text-center"
-                          >
-                            {col === "Value of Sales"
-                              ? new Intl.NumberFormat("en-GB", {
-                                  style: "currency",
-                                  currency: "GBP",
-                                }).format(row[col])
-                              : row[col]}
-                          </td>
-                        ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <Table
+              header="Top 10 Products by Sales"
+              columns={salesColumnOrder}
+              data={topFiveSales}
+            />
           )}
         </>
       )}
