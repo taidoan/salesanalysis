@@ -32,6 +32,7 @@ export const getSalesValues = ({
         ({
           ...r,
           [col]: Number(r[col]) || 0,
+          /* eslint-disable  @typescript-eslint/no-explicit-any */
         } as Record<string, any>)
     )
     .filter(

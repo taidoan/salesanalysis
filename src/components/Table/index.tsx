@@ -2,6 +2,7 @@ import { headerNames, hiddenColumns } from "@/config";
 type TableProps = {
   header: string;
   columns: string[];
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   data: Record<string, any>[];
   className?: string;
 };

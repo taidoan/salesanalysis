@@ -11,7 +11,9 @@ import {
 } from "./../../classes";
 
 type ResultProps = {
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   quantity: Record<string, any>[];
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   sales: Record<string, any>[];
   numberOfProducts: number;
   setNumberOfProducts: React.Dispatch<React.SetStateAction<number>>;

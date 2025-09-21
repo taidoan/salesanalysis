@@ -26,7 +26,7 @@ export const disabledButton = `bg-gray-400/20 border-white/0 shadow-none text-gr
 export const enabledButton = `bg-white/30 border-white/40 dark:border-white/20 dark:text-white cursor-pointer`;
 
 // Hover button style
-export const hoverButton = `hover:-translate-y-0.5 hover:bg-indigo-400 hover:border-white/80 hover:shadow-lg/20 dark:hover:text-black dark:hover:bg-white/60 dark:hover:border-white/60 hover:text-white`;
+export const hoverButton = `hover:-translate-y-0.5 hover:bg-indigo-400 hover:border-indigo-400 hover:shadow-lg/20 dark:hover:text-black dark:hover:bg-white/60 dark:hover:border-white/60 hover:text-white`;
 
 // Active button style
 export const activeButton = `

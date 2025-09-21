@@ -3,14 +3,7 @@ import { useState } from "react";
 import { getQuantity } from "@/utilities/getQuantity";
 import { getSalesValues } from "@/utilities/getSalesValues";
 import { Results } from "../Result";
-import {
-  baseButton,
-  enabledButton,
-  fieldClass,
-  fieldContainerClass,
-  hoverButton,
-  labelClass,
-} from "./../../classes";
+import { fieldClass, fieldContainerClass, labelClass } from "./../../classes";
 import { clsx } from "clsx";
 
 export default function PasteTable() {
